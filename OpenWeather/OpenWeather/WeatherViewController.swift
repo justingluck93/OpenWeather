@@ -10,11 +10,12 @@ import UIKit
 import CoreLocation
 
 class WeatherViewController: UIViewController, CLLocationManagerDelegate {
+    let apiKey: String = "d78bc971defb9c9c6d281dde9d133a02"
     var requestPermissionForLocationIfNeeded: CLAuthorizationStatus?
     var locationManager: CLLocationManager?
     var latitude: String?
     var longitude: String?
-    var URL: URL?
+    var dayForcastURL: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +46,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func getWeatherForCurrentLocation(latitude: String, longitude: String) {
-        let x = latitude
+        dayForcastURL = URL(string:"https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&units=\("imperial")&appid=\(apiKey)")
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
