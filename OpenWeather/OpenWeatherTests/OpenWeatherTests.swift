@@ -11,11 +11,11 @@ import XCTest
 
 class OpenWeatherTests: XCTestCase {
     
-    var subject: WeatherViewController?
+    var subject: MockWeatherVC?
     
     override func setUp() {
         super.setUp()
-        subject = WeatherViewController()
+        subject = MockWeatherVC()
     }
     
     override func tearDown() {
@@ -23,7 +23,9 @@ class OpenWeatherTests: XCTestCase {
     }
     
     func testThatApplicationRequestsLocationPermissionIfNeeded() {
-        
+        subject?.requestPermissionForLocationIfNeeded = .notDetermined
+        subject?.viewDidLoad()
+        assert(subject?.didRequestLocationPermissionCalled == true)
     }
     
     func testPerformanceExample() {
@@ -32,5 +34,12 @@ class OpenWeatherTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+}
+
+class MockWeatherVC: WeatherViewController {
+    var didRequestLocationPermissionCalled: Bool = false
     
+    override func requestLocationPermission() {
+        didRequestLocationPermissionCalled = true
+    }
 }
