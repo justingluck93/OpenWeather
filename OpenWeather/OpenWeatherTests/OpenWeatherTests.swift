@@ -50,16 +50,21 @@ class OpenWeatherTests: XCTestCase {
         subject?.locationManager(manager, didUpdateLocations: [CLLocation(latitude: 50, longitude: 80)])
         XCTAssertEqual(subject?.latitude, "50.0")
         XCTAssertEqual(subject?.longitude, "80.0")
+        
     }
     
     func testThatUpdateWeatherIsCalledAfterCoordinatesAreUpdated() {
-        
+        let manager = MockLocationManager()
+        subject?.locationManager = manager
+        subject?.locationManager(manager, didUpdateLocations: [CLLocation(latitude: 50, longitude: 80)])
+        assert(subject?.getWeatherWasCalled == true)
     }
 }
 
 class MockWeatherVC: WeatherViewController {
     var didRequestLocationPermissionCalled: Bool = false
     var locationPermissionAlertCalled: Bool = false
+    var getWeatherWasCalled: Bool = false
     
     override func requestLocationPermission() {
         didRequestLocationPermissionCalled = true
@@ -68,6 +73,11 @@ class MockWeatherVC: WeatherViewController {
     override func showLocationPermissionAlert() {
         locationPermissionAlertCalled = true
     }
+    
+    override func getWeatherForCurrentLocation(latitude: String, longitude: String) {
+        getWeatherWasCalled = true
+    }
+
 }
 
 class MockLocationManager: CLLocationManager {

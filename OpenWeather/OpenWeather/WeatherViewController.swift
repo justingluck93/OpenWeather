@@ -44,6 +44,10 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         self.present(alert, animated: true)
     }
     
+    func getWeatherForCurrentLocation(latitude: String, longitude: String) {
+        let x = latitude
+    }
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
         case .denied:
@@ -68,6 +72,8 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         
         latitude = "\(location.coordinate.latitude)"
         longitude = "\(location.coordinate.longitude)"
+        
+        getWeatherForCurrentLocation(latitude: latitude!, longitude: longitude!)
         
     }
 }
