@@ -15,7 +15,6 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     var locationManager: CLLocationManager?
     var latitude: String?
     var longitude: String?
-    var dayForcastURL: URL?
     var weatherResults: WeatherResults?
     
     //IBOutlets
@@ -54,13 +53,11 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func getWeatherForCurrentLocation(latitude: String, longitude: String) {
-        dayForcastURL = URL(string:"https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&units=\("imperial")&appid=\(apiKey)")
+        guard let weatherUrl = URL(string:"https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&units=\("imperial")&appid=\(apiKey)") else { return }
         
         let session = URLSession.shared
         
-        guard let url = dayForcastURL else { return }
-        
-        session.dataTask(with: url) { (data, response, error) in
+        session.dataTask(with: weatherUrl) { (data, response, error) in
             if let data = data {
                 do {
                     self.weatherResults = try JSONDecoder().decode(WeatherResults.self, from: data)

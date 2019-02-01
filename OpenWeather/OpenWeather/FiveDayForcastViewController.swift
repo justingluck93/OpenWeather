@@ -10,14 +10,15 @@ import UIKit
 import CoreLocation
 
 class FiveDayForcastViewController: UIViewController {
-    let apiKeyx: String = "d78bc971defb9c9c6d281dde9d133a02"
+    let apiKey: String = "d78bc971defb9c9c6d281dde9d133a02"
 
     override func viewDidLoad() {
-       getWeatherForCurrentLocationx(latitude: "42.6584", longitude: "-83.1499")
+        super.viewDidLoad()
+        getWeatherForCurrentLocation(latitude: "42.6584", longitude: "-83.1499")
     }
 
-    func getWeatherForCurrentLocationx(latitude: String, longitude: String) {
-        let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&units=imperial&appid=\(apiKeyx)")
+    func getWeatherForCurrentLocation(latitude: String, longitude: String) {
+        let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&units=imperial&appid=\(apiKey)")
         
         let session = URLSession.shared
         

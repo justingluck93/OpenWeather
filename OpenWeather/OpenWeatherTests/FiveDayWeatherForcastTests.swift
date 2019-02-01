@@ -28,19 +28,20 @@ class FiveDayWeatherForcastTests: XCTestCase {
         assert(subject?.getWeatherWasCalled == true)
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testThatApplicationSetsUrlUsingCorrectCoordinatesAndApiKeyForFiveDayWeatherForcast() {
+        subject?.getWeatherForCurrentLocation(latitude: "50", longitude: "50")
+        let expectedURL = URL(string:"https://api.openweathermap.org/data/2.5/forecast?lat=50&lon=50&units=imperial&appid=d78bc971defb9c9c6d281dde9d133a02")
+        XCTAssertEqual(subject?.weatherURL, expectedURL)
     }
 }
 
 class MockFiveDayWeatherForcast: FiveDayForcastViewController {
     var getWeatherWasCalled: Bool = false
+    var weatherURL: URL?
     
-    override func getWeatherForCurrentLocationx(latitude: String, longitude: String) {
+    override func getWeatherForCurrentLocation(latitude: String, longitude: String) {
         getWeatherWasCalled = true
+        weatherURL = URL(string:"https://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&units=imperial&appid=\(apiKey)")
     }
     
 }
