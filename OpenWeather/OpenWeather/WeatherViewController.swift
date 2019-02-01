@@ -63,13 +63,36 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         session.dataTask(with: url) { (data, response, error) in
             if let data = data {
                 do {
-                self.weatherResults = try JSONDecoder().decode(WeatherResults.self, from: data)
+                    self.weatherResults = try JSONDecoder().decode(WeatherResults.self, from: data)
                 } catch {
                     return
+                }
+                DispatchQueue.main.sync {
+                    self.updateWeather()
                 }
         }
     }.resume()
 }
+    
+    func updateWeather() {
+        guard let weatherResults = weatherResults else {
+            return
+        }
+        print(weatherResults.weather[0].icon)
+        guard let iconURL = URL(string: "https://openweathermap.org/img/w/\(weatherResults.weather[0].icon).png") else { return }
+        guard let data = try? Data(contentsOf:iconURL) else { return }
+        
+        self.cityLabel.text = "\(weatherResults.name)"
+        self.tempLabel.text = "\(weatherResults.main.temp) ℉ "
+        self.weatherIcon.image = UIImage(data: data)
+        
+        let date = Date(timeIntervalSince1970: weatherResults.dt)
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.dateFormat = "E, MMM d h:mm a"
+        
+        self.timeLabel.text = dateFormatter.string(from: date)
+    }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
@@ -97,7 +120,6 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         longitude = "\(location.coordinate.longitude)"
         
         getWeatherForCurrentLocation(latitude: latitude!, longitude: longitude!)
-        
     }
 }
 
