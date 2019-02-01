@@ -35,10 +35,16 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         locationManager?.startUpdatingLocation()
     }
     
+    func showLocationPermissionAlert() {
+        let alert = UIAlertController(title: "Location Permission Denied", message: "Please turn on location settings in settings", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
         case .denied:
-            break
+            showLocationPermissionAlert()
         case .notDetermined:
             requestLocationPermission()
             break

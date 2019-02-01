@@ -37,14 +37,26 @@ class OpenWeatherTests: XCTestCase {
         assert(manager.didStartUpdatintLocationCalled)
     }
     
+    func testThatAoplicationCallsShowWeatherPermissionDeniedAlertWhenAuthorizationStatusIsDenied() {
+        let manager = MockLocationManager()
+        subject?.locationManager = manager
+        subject?.locationManager(manager, didChangeAuthorization: .denied)
+        assert(subject?.locationPermissionAlertCalled == true)
+    }
+    
     
 }
 
 class MockWeatherVC: WeatherViewController {
     var didRequestLocationPermissionCalled: Bool = false
+    var locationPermissionAlertCalled: Bool = false
     
     override func requestLocationPermission() {
         didRequestLocationPermissionCalled = true
+    }
+    
+    override func showLocationPermissionAlert() {
+        locationPermissionAlertCalled = true
     }
 }
 
