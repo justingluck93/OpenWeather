@@ -44,7 +44,17 @@ class OpenWeatherTests: XCTestCase {
         assert(subject?.locationPermissionAlertCalled == true)
     }
     
+    func testThatApplicationUpdatesCoordinates() {
+        let manager = MockLocationManager()
+        subject?.locationManager = manager
+        subject?.locationManager(manager, didUpdateLocations: [CLLocation(latitude: 50, longitude: 80)])
+        XCTAssertEqual(subject?.latitude, "50.0")
+        XCTAssertEqual(subject?.longitude, "80.0")
+    }
     
+    func testThatUpdateWeatherIsCalledAfterCoordinatesAreUpdated() {
+        
+    }
 }
 
 class MockWeatherVC: WeatherViewController {

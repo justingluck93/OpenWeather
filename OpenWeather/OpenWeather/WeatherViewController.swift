@@ -12,6 +12,9 @@ import CoreLocation
 class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     var requestPermissionForLocationIfNeeded: CLAuthorizationStatus?
     var locationManager: CLLocationManager?
+    var latitude: String?
+    var longitude: String?
+    var URL: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,5 +59,15 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         case .restricted:
             break
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        locationManager?.stopUpdatingLocation()
+        
+        guard let location = locations.first else { return }
+        
+        latitude = "\(location.coordinate.latitude)"
+        longitude = "\(location.coordinate.longitude)"
+        
     }
 }
