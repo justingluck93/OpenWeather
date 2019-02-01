@@ -16,6 +16,13 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     var latitude: String?
     var longitude: String?
     var dayForcastURL: URL?
+    var weatherResults: WeatherResults?
+    
+    //IBOutlets
+    @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var weatherIcon: UIImageView!
+    @IBOutlet weak var tempLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +43,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func startUpdatingLocation() {
+        locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         locationManager?.startUpdatingLocation()
     }
     
@@ -47,7 +55,21 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     func getWeatherForCurrentLocation(latitude: String, longitude: String) {
         dayForcastURL = URL(string:"https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&units=\("imperial")&appid=\(apiKey)")
-    }
+        
+        let session = URLSession.shared
+        
+        guard let url = dayForcastURL else { return }
+        
+        session.dataTask(with: url) { (data, response, error) in
+            if let data = data {
+                do {
+                self.weatherResults = try JSONDecoder().decode(WeatherResults.self, from: data)
+                } catch {
+                    return
+                }
+        }
+    }.resume()
+}
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
@@ -77,4 +99,19 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         getWeatherForCurrentLocation(latitude: latitude!, longitude: longitude!)
         
     }
+}
+
+struct WeatherResults: Decodable {
+    var main: Main
+    var name: String
+    var weather: [Weather]
+    var dt: Double
+}
+
+struct Main: Decodable {
+    var temp: Double
+}
+
+struct Weather: Decodable {
+    var icon: String
 }

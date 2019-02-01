@@ -37,10 +37,11 @@ class OpenWeatherTests: XCTestCase {
         assert(manager.didStartUpdatintLocationCalled)
     }
     
-    func testThatAoplicationCallsShowWeatherPermissionDeniedAlertWhenAuthorizationStatusIsDenied() {
+    func testThatApplicationCallsShowWeatherPermissionDeniedAlertWhenAuthorizationStatusIsDenied() {
         let manager = MockLocationManager()
         subject?.locationManager = manager
         subject?.locationManager(manager, didChangeAuthorization: .denied)
+        XCTAssertEqual(subject?.locationManager?.desiredAccuracy, kCLLocationAccuracyBest)
         assert(subject?.locationPermissionAlertCalled == true)
     }
     
@@ -87,7 +88,6 @@ class MockWeatherVC: WeatherViewController {
         getWeatherWasCalled = true
         weatherURL = URL(string:"https://api.openweathermap.org/data/2.5/weather?lat=50&lon=50&units=imperial&appid=d78bc971defb9c9c6d281dde9d133a02")
     }
-
 }
 
 class MockLocationManager: CLLocationManager {
