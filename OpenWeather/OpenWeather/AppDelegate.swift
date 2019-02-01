@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  OpenWeather
 //
-//  Created by admin on 2/1/19.
+//  Created by Justin Gluck on 2/1/19.
 //  Copyright © 2019 justingluck. All rights reserved.
 //
 

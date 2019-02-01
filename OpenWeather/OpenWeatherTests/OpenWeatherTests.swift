@@ -7,6 +7,8 @@
 //
 
 import XCTest
+import CoreLocation
+
 @testable import OpenWeather
 
 class OpenWeatherTests: XCTestCase {
@@ -28,12 +30,14 @@ class OpenWeatherTests: XCTestCase {
         assert(subject?.didRequestLocationPermissionCalled == true)
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testThatApplicationStartsUpdatingUserLocationWhenPermissionIsAuthorized() {
+        let manager = MockLocationManager()
+        subject?.locationManager = manager
+        subject?.locationManager(manager, didChangeAuthorization: .authorizedWhenInUse)
+        assert(manager.didStartUpdatintLocationCalled)
     }
+    
+    
 }
 
 class MockWeatherVC: WeatherViewController {
@@ -41,5 +45,17 @@ class MockWeatherVC: WeatherViewController {
     
     override func requestLocationPermission() {
         didRequestLocationPermissionCalled = true
+    }
+}
+
+class MockLocationManager: CLLocationManager {
+    var didStartUpdatintLocationCalled = false
+    
+    override init() {
+        super.init()
+    }
+    
+    override func startUpdatingLocation() {
+        didStartUpdatintLocationCalled = true
     }
 }

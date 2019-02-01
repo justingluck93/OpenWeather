@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  OpenWeather
 //
-//  Created by admin on 2/1/19.
+//  Created by Justin Gluck on 2/1/19.
 //  Copyright © 2019 justingluck. All rights reserved.
 //
 
@@ -30,11 +30,25 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     func requestLocationPermission() {
         locationManager?.requestWhenInUseAuthorization()
     }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func startUpdatingLocation() {
+        locationManager?.startUpdatingLocation()
     }
-
-
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .denied:
+            break
+        case .notDetermined:
+            requestLocationPermission()
+            break
+        case .authorizedWhenInUse:
+            startUpdatingLocation()
+            break
+        case .authorizedAlways:
+            break
+        case .restricted:
+            break
+        }
+    }
 }
-
