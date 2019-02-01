@@ -13,7 +13,7 @@
         <!--Item 2-->
         <scene sceneID="XFi-zK-ytT">
             <objects>
-                <viewController id="rzr-p6-CYN" sceneMemberID="viewController">
+                <viewController id="rzr-p6-CYN" customClass="FiveDayForcastViewController" customModule="OpenWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Omv-aS-LlZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -86,7 +86,6 @@ class MockWeatherVC: WeatherViewController {
     
     override func getWeatherForCurrentLocation(latitude: String, longitude: String) {
         getWeatherWasCalled = true
-        weatherURL = URL(string:"https://api.openweathermap.org/data/2.5/weather?lat=50&lon=50&units=imperial&appid=d78bc971defb9c9c6d281dde9d133a02")
     }
 }
 
