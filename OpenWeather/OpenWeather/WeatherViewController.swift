@@ -49,7 +49,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     func showLocationPermissionAlert() {
         let alert = UIAlertController(title: "Location Permission Denied", message: "Please turn on location settings in settings", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true)
+        present(alert, animated: true)
     }
     
     func getWeatherForCurrentLocation(latitude: String, longitude: String) {

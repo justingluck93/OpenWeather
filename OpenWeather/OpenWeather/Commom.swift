@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 func convertDate(milliseconds: Double) -> String {
     let date = Date(timeIntervalSince1970: milliseconds)
@@ -19,6 +20,6 @@ func convertDate(milliseconds: Double) -> String {
 
 func getImageFromUrl(iconIdentifier: String) -> Data  {
     guard let iconURL = URL(string: "https://openweathermap.org/img/w/\(iconIdentifier).png"),
-        let data = try? Data(contentsOf:iconURL) else { fatalError() }
+    let data = try? Data(contentsOf:iconURL) else { fatalError() }
     return data
 }

@@ -7,13 +7,13 @@
 //
 
 import XCTest
-
+import CoreLocation
 @testable import OpenWeather
 
 class FiveDayWeatherForcastTests: XCTestCase {
     
     var subject: MockFiveDayWeatherForcast?
-    
+    var fakeJSONDecodable: FiveDayWeatherForcast = FiveDayWeatherForcast(list: [OpenWeather.ThreeHourInterval(dt: 1549130400.0, main: OpenWeather.Main(temp: 42.170000000000002), weather: [OpenWeather.Weather(icon: "02d")]), OpenWeather.ThreeHourInterval(dt: 1549141200.0, main: OpenWeather.Main(temp: 46.039999999999999), weather: [OpenWeather.Weather(icon: "10d")]), OpenWeather.ThreeHourInterval(dt: 1549152000.0, main: OpenWeather.Main(temp: 42.75), weather: [OpenWeather.Weather(icon: "10n")])], city: OpenWeather.City(name: "Auburn Hills"))
     
     override func setUp() {
         super.setUp()
@@ -36,20 +36,34 @@ class FiveDayWeatherForcastTests: XCTestCase {
         XCTAssertTrue(fiveDayController.tableView.dataSource == nil)
     }
     
-    func testViewControllerHasCorrectNumberOfRows() {
-        let fiveDayController = UIStoryboard(name: "Main", bundle: Bundle(for: FiveDayForcastViewController.self)).instantiateViewController(withIdentifier: "FiveDayForcastViewController") as! FiveDayForcastViewController
-        fiveDayController.loadViewIfNeeded()
-       // fiveDayController.weatherResults
-    }
-    
     func testFiveDayWeatherForcastTableViewDelegateShouldBeNilOnViewDidLoad() {
         let fiveDayController = UIStoryboard(name: "Main", bundle: Bundle(for: FiveDayForcastViewController.self)).instantiateViewController(withIdentifier: "FiveDayForcastViewController") as! FiveDayForcastViewController
         fiveDayController.loadViewIfNeeded()
         XCTAssertTrue(fiveDayController.tableView.delegate == nil)
     }
     
-    func testApplicationShouldCallGetWeatherForCurrentLocationWhenFiveDayForcastIsOpen() {
-        subject?.viewDidLoad()
+    func testTableViewShouldHaveCorrectNumberOfRows(){
+        let fiveDayController = UIStoryboard(name: "Main", bundle: Bundle(for: FiveDayForcastViewController.self)).instantiateViewController(withIdentifier: "FiveDayForcastViewController") as! FiveDayForcastViewController
+        fiveDayController.loadViewIfNeeded()
+        fiveDayController.weatherResults = fakeJSONDecodable
+        let expectedRows = fiveDayController.tableView(fiveDayController.tableView, numberOfRowsInSection: 1)
+        XCTAssertEqual(expectedRows, 3)
+    }
+    
+    func testTableViewCellsHasCorrectInformationBasedOnData() {
+        let fiveDayController = UIStoryboard(name: "Main", bundle: Bundle(for: FiveDayForcastViewController.self)).instantiateViewController(withIdentifier: "FiveDayForcastViewController") as! FiveDayForcastViewController
+        fiveDayController.loadViewIfNeeded()
+        fiveDayController.weatherResults = fakeJSONDecodable
+        let myCell = fiveDayController.tableView(fiveDayController.tableView, cellForRowAt: IndexPath(item: 0, section: 0))
+        
+        XCTAssertEqual(myCell.textLabel?.text, "42 ℉")
+        XCTAssertEqual(myCell.detailTextLabel?.text, "Sat, Feb 2 1:00 PM")
+    }
+    
+    func testThatUpdateWeatherIsCalledAfterCoordinatesAreUpdated() {
+        let manager = MockLocationManager()
+        subject?.locationManager = manager
+        subject?.locationManager(manager, didUpdateLocations: [CLLocation(latitude: 50, longitude: 80)])
         assert(subject?.getWeatherWasCalled == true)
     }
     

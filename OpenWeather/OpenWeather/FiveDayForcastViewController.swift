@@ -9,19 +9,22 @@
 import UIKit
 import CoreLocation
 
-class FiveDayForcastViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class FiveDayForcastViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate {
     
     var weatherResults: FiveDayWeatherForcast?
     let apiKey: String = "d78bc971defb9c9c6d281dde9d133a02"
+    var locationManager: CLLocationManager?
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getWeatherForCurrentLocation(latitude: "42.6584", longitude: "-83.1499")
+        locationManager = locationManager == nil ? CLLocationManager() : locationManager
+        locationManager?.delegate = self
+        locationManager?.startUpdatingLocation()
     }
-
+    
     func getWeatherForCurrentLocation(latitude: String, longitude: String) {
         let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&units=imperial&appid=\(apiKey)")
         
@@ -31,7 +34,9 @@ class FiveDayForcastViewController: UIViewController, UITableViewDataSource, UIT
         session.dataTask(with: url!) { (data, response, error) in
             if let data = data {
                 do {
-                    self.weatherResults = try JSONDecoder().decode(FiveDayWeatherForcast.self, from: data)                    
+                    self.weatherResults = try JSONDecoder().decode(FiveDayWeatherForcast.self, from: data)
+                    guard let myweatherResults = self.weatherResults else {return}
+                    print(myweatherResults)
                 } catch {
                     return
                 }
@@ -68,6 +73,40 @@ class FiveDayForcastViewController: UIViewController, UITableViewDataSource, UIT
         
         return weatherCell
     }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        locationManager?.stopUpdatingLocation()
+        
+        guard let location = locations.first else { return }
+        
+        let latitude = "\(location.coordinate.latitude)"
+        let longitude = "\(location.coordinate.longitude)"
+        
+        getWeatherForCurrentLocation(latitude: latitude, longitude: longitude)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .denied:
+            showLocationPermissionAlert()
+        case .notDetermined:
+            break
+        case .authorizedWhenInUse:
+            locationManager?.startUpdatingLocation()
+            break
+        case .authorizedAlways:
+            break
+        case .restricted:
+            break
+        }
+    }
+    
+    func showLocationPermissionAlert() {
+        let alert = UIAlertController(title: "Location Permission Denied", message: "Please turn on location settings in settings", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true)
+    }
+
 }
 
 struct FiveDayWeatherForcast: Decodable {
