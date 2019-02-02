@@ -15,9 +15,10 @@ class FiveDayForcastViewController: UIViewController, UITableViewDataSource, UIT
     let apiKey: String = "d78bc971defb9c9c6d281dde9d133a02"
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
         getWeatherForCurrentLocation(latitude: "42.6584", longitude: "-83.1499")
     }
 
@@ -26,6 +27,7 @@ class FiveDayForcastViewController: UIViewController, UITableViewDataSource, UIT
         
         let session = URLSession.shared
         
+        spinner.startAnimating()
         session.dataTask(with: url!) { (data, response, error) in
             if let data = data {
                 do {
@@ -36,14 +38,18 @@ class FiveDayForcastViewController: UIViewController, UITableViewDataSource, UIT
                 DispatchQueue.main.sync {
                     self.tableView.dataSource = self
                     self.tableView.delegate = self
-                    self.tableView.reloadData()
+                    UIView.transition(with: self.tableView,
+                                      duration: 0.35,
+                                      options: .transitionCrossDissolve,
+                                      animations: { self.tableView.reloadData() })
+                    self.spinner.stopAnimating()
                 }
             }
         }.resume()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       guard let rows = weatherResults?.list.count else { fatalError() }
+        guard let rows = weatherResults?.list.count else { fatalError() }
         return rows
     }
     
@@ -78,5 +84,3 @@ struct ThreeHourInterval: Decodable {
 struct City: Decodable {
     var name: String
 }
-
-

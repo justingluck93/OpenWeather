@@ -67,9 +67,9 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
                 DispatchQueue.main.sync {
                     self.updateWeather()
                 }
-        }
-    }.resume()
-}
+            }
+        }.resume()
+    }
     
     func updateWeather() {
         guard var weatherResults = weatherResults else {

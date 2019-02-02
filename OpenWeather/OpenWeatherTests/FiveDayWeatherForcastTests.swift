@@ -14,6 +14,7 @@ class FiveDayWeatherForcastTests: XCTestCase {
     
     var subject: MockFiveDayWeatherForcast?
     
+    
     override func setUp() {
         super.setUp()
         subject = MockFiveDayWeatherForcast()
@@ -33,6 +34,12 @@ class FiveDayWeatherForcastTests: XCTestCase {
         let fiveDayController = UIStoryboard(name: "Main", bundle: Bundle(for: FiveDayForcastViewController.self)).instantiateViewController(withIdentifier: "FiveDayForcastViewController") as! FiveDayForcastViewController
         fiveDayController.loadViewIfNeeded()
         XCTAssertTrue(fiveDayController.tableView.dataSource == nil)
+    }
+    
+    func testViewControllerHasCorrectNumberOfRows() {
+        let fiveDayController = UIStoryboard(name: "Main", bundle: Bundle(for: FiveDayForcastViewController.self)).instantiateViewController(withIdentifier: "FiveDayForcastViewController") as! FiveDayForcastViewController
+        fiveDayController.loadViewIfNeeded()
+       // fiveDayController.weatherResults
     }
     
     func testFiveDayWeatherForcastTableViewDelegateShouldBeNilOnViewDidLoad() {
@@ -61,5 +68,4 @@ class MockFiveDayWeatherForcast: FiveDayForcastViewController {
         getWeatherWasCalled = true
         weatherURL = URL(string:"https://api.openweathermap.org/data/2.5/forecast?lat=\(latitude)&lon=\(longitude)&units=imperial&appid=\(apiKey)")
     }
-    
 }
