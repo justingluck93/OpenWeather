@@ -22,6 +22,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var weatherIcon: UIImageView!
     @IBOutlet weak var tempLabel: UILabel!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,7 +57,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         guard let weatherUrl = URL(string:"https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&units=\("imperial")&appid=\(apiKey)") else { return }
         
         let session = URLSession.shared
-        
+        spinner.startAnimating()
         session.dataTask(with: weatherUrl) { (data, response, error) in
             if let data = data {
                 do {
@@ -66,6 +67,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
                 }
                 DispatchQueue.main.sync {
                     self.updateWeather()
+                    self.spinner.stopAnimating()
                 }
             }
         }.resume()
