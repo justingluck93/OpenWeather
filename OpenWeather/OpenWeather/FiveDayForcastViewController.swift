@@ -9,11 +9,15 @@
 import UIKit
 import CoreLocation
 
-class FiveDayForcastViewController: UIViewController {
+class FiveDayForcastViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    var weatherResults: FiveDayWeatherForcast?
     let apiKey: String = "d78bc971defb9c9c6d281dde9d133a02"
 
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad()        
         getWeatherForCurrentLocation(latitude: "42.6584", longitude: "-83.1499")
     }
 
@@ -25,18 +29,37 @@ class FiveDayForcastViewController: UIViewController {
         session.dataTask(with: url!) { (data, response, error) in
             if let data = data {
                 do {
-                    let weatherResults = try JSONDecoder().decode(FiveDayWeatherForcast.self, from: data)
-                    print(weatherResults.city.name)
-                    print(weatherResults.list[0].main.temp)
-                    
+                    self.weatherResults = try JSONDecoder().decode(FiveDayWeatherForcast.self, from: data)                    
                 } catch {
                     return
                 }
                 DispatchQueue.main.sync {
-                    
+                    self.tableView.dataSource = self
+                    self.tableView.delegate = self
+                    self.tableView.reloadData()
                 }
             }
         }.resume()
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+       guard let rows = weatherResults?.list.count else { fatalError() }
+        return rows
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard var weatherResults = weatherResults else { fatalError() }
+        let weatherCell = tableView.dequeueReusableCell(withIdentifier: "WeatherCell", for: indexPath)
+        
+        let cellTitle = Int(weatherResults.list[indexPath.row].main.temp.rounded())
+        weatherCell.textLabel?.text = "\(cellTitle) ℉"
+        
+        let cellSubTitle = weatherResults.list[indexPath.row].dt
+        weatherCell.detailTextLabel?.text = "\(cellSubTitle)"
+        
+        let cellImage = 
+        
+        return weatherCell
     }
 }
 

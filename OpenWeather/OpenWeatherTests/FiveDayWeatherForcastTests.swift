@@ -23,6 +23,24 @@ class FiveDayWeatherForcastTests: XCTestCase {
         super.tearDown()
     }
     
+    func testFiveDayWeatherForcastHasATableView() {
+          let fiveDayController = UIStoryboard(name: "Main", bundle: Bundle(for: FiveDayForcastViewController.self)).instantiateViewController(withIdentifier: "FiveDayForcastViewController") as! FiveDayForcastViewController
+        fiveDayController.loadViewIfNeeded()
+        XCTAssertNotNil(fiveDayController.tableView)
+    }
+    
+    func testFiveDayWeatherForcastDataSourceShouldBeNilOnViewDidLoad() {
+        let fiveDayController = UIStoryboard(name: "Main", bundle: Bundle(for: FiveDayForcastViewController.self)).instantiateViewController(withIdentifier: "FiveDayForcastViewController") as! FiveDayForcastViewController
+        fiveDayController.loadViewIfNeeded()
+        XCTAssertTrue(fiveDayController.tableView.dataSource == nil)
+    }
+    
+    func testFiveDayWeatherForcastTableViewDelegateShouldBeNilOnViewDidLoad() {
+        let fiveDayController = UIStoryboard(name: "Main", bundle: Bundle(for: FiveDayForcastViewController.self)).instantiateViewController(withIdentifier: "FiveDayForcastViewController") as! FiveDayForcastViewController
+        fiveDayController.loadViewIfNeeded()
+        XCTAssertTrue(fiveDayController.tableView.delegate == nil)
+    }
+    
     func testApplicationShouldCallGetWeatherForCurrentLocationWhenFiveDayForcastIsOpen() {
         subject?.viewDidLoad()
         assert(subject?.getWeatherWasCalled == true)

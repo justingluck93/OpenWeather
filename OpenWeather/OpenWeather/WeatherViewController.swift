@@ -72,15 +72,14 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
 }
     
     func updateWeather() {
-        guard let weatherResults = weatherResults else {
+        guard var weatherResults = weatherResults else {
             return
         }
-        print(weatherResults.weather[0].icon)
         guard let iconURL = URL(string: "https://openweathermap.org/img/w/\(weatherResults.weather[0].icon).png") else { return }
         guard let data = try? Data(contentsOf:iconURL) else { return }
         
         self.cityLabel.text = "\(weatherResults.name)"
-        self.tempLabel.text = "\(weatherResults.main.temp) ℉ "
+        self.tempLabel.text = "\(Int(weatherResults.main.temp.rounded())) ℉ "
         self.weatherIcon.image = UIImage(data: data)
         
         let date = Date(timeIntervalSince1970: weatherResults.dt)
