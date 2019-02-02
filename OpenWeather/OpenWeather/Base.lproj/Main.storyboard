@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Item 2-->
+        <!--5 Day Forcast-->
         <scene sceneID="XFi-zK-ytT">
             <objects>
                 <viewController storyboardIdentifier="FiveDayForcastViewController" id="rzr-p6-CYN" customClass="FiveDayForcastViewController" customModule="OpenWeather" customModuleProvider="target" sceneMemberID="viewController">
@@ -63,7 +63,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9Uh-Ll-Kgi"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="cwK-VJ-XHb"/>
+                    <tabBarItem key="tabBarItem" title="5 Day Forcast" image="cloud" id="cwK-VJ-XHb"/>
                     <connections>
                         <outlet property="spinner" destination="d3u-qo-bOc" id="ges-gt-agu"/>
                         <outlet property="tableView" destination="9q3-Cr-0yN" id="1wh-UH-r7w"/>
@@ -73,7 +73,7 @@
             </objects>
             <point key="canvasLocation" x="138.40000000000001" y="502.39880059970017"/>
         </scene>
-        <!--Item 1-->
+        <!--Current Forcast-->
         <scene sceneID="Vzs-BM-Sc0">
             <objects>
                 <viewController id="l99-fY-JC9" customClass="WeatherViewController" customModule="OpenWeather" customModuleProvider="target" sceneMemberID="viewController">
@@ -115,7 +115,7 @@
                         <color key="backgroundColor" red="0.94672033629441621" green="0.94672033629441621" blue="0.94672033629441621" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="PsU-4p-z7M"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="T0h-OG-bw3"/>
+                    <tabBarItem key="tabBarItem" title="Current Forcast" image="worldwide_location" id="T0h-OG-bw3"/>
                     <connections>
                         <outlet property="cityLabel" destination="F77-rk-RRr" id="9p7-l7-d2z"/>
                         <outlet property="spinner" destination="hGN-QF-Mng" id="Esy-1W-Fw4"/>
@@ -147,4 +147,8 @@
             <point key="canvasLocation" x="-811" y="170"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="cloud" width="30" height="30"/>
+        <image name="worldwide_location" width="30" height="30"/>
+    </resources>
 </document>
