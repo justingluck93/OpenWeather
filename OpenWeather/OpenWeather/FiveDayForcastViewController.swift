@@ -54,10 +54,11 @@ class FiveDayForcastViewController: UIViewController, UITableViewDataSource, UIT
         let cellTitle = Int(weatherResults.list[indexPath.row].main.temp.rounded())
         weatherCell.textLabel?.text = "\(cellTitle) ℉"
         
-        let cellSubTitle = weatherResults.list[indexPath.row].dt
+        let cellSubTitle = convertDate(milliseconds: weatherResults.list[indexPath.row].dt)
         weatherCell.detailTextLabel?.text = "\(cellSubTitle)"
         
-        let cellImage = 
+        let cellImage = getImageFromUrl(iconIdentifier: weatherResults.list[indexPath.row].weather[0].icon)
+        weatherCell.imageView?.image = UIImage(data: cellImage)
         
         return weatherCell
     }

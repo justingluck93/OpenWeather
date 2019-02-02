@@ -14,6 +14,7 @@
 		84D9A54B22048EC4009EEB50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84D9A54922048EC4009EEB50 /* LaunchScreen.storyboard */; };
 		84D9A55622048EC4009EEB50 /* OpenWeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9A55522048EC4009EEB50 /* OpenWeatherTests.swift */; };
 		84E8EE682205051B001BFB8A /* FiveDayWeatherForcastTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8EE672205051B001BFB8A /* FiveDayWeatherForcastTests.swift */; };
+		84E8EE6A22053C16001BFB8A /* Commom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8EE6922053C16001BFB8A /* Commom.swift */; };
 		84F535992204D4920050E098 /* FiveDayForcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F535982204D4920050E098 /* FiveDayForcastViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		84D9A55522048EC4009EEB50 /* OpenWeatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWeatherTests.swift; sourceTree = "<group>"; };
 		84D9A55722048EC4009EEB50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84E8EE672205051B001BFB8A /* FiveDayWeatherForcastTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveDayWeatherForcastTests.swift; sourceTree = "<group>"; };
+		84E8EE6922053C16001BFB8A /* Commom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commom.swift; sourceTree = "<group>"; };
 		84F535982204D4920050E098 /* FiveDayForcastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveDayForcastViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -82,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				84D9A54022048EC3009EEB50 /* AppDelegate.swift */,
+				84E8EE6922053C16001BFB8A /* Commom.swift */,
 				84D9A54222048EC4009EEB50 /* WeatherViewController.swift */,
 				84F535982204D4920050E098 /* FiveDayForcastViewController.swift */,
 				84D9A54422048EC4009EEB50 /* Main.storyboard */,
@@ -208,6 +211,7 @@
 				84D9A54322048EC4009EEB50 /* WeatherViewController.swift in Sources */,
 				84D9A54122048EC3009EEB50 /* AppDelegate.swift in Sources */,
 				84F535992204D4920050E098 /* FiveDayForcastViewController.swift in Sources */,
+				84E8EE6A22053C16001BFB8A /* Commom.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

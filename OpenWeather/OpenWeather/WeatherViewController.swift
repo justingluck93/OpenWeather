@@ -75,19 +75,11 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         guard var weatherResults = weatherResults else {
             return
         }
-        guard let iconURL = URL(string: "https://openweathermap.org/img/w/\(weatherResults.weather[0].icon).png") else { return }
-        guard let data = try? Data(contentsOf:iconURL) else { return }
         
         self.cityLabel.text = "\(weatherResults.name)"
         self.tempLabel.text = "\(Int(weatherResults.main.temp.rounded())) ℉ "
-        self.weatherIcon.image = UIImage(data: data)
-        
-        let date = Date(timeIntervalSince1970: weatherResults.dt)
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone.current
-        dateFormatter.dateFormat = "E, MMM d h:mm a"
-        
-        self.timeLabel.text = dateFormatter.string(from: date)
+        self.weatherIcon.image = UIImage(data: getImageFromUrl(iconIdentifier: weatherResults.weather[0].icon))
+        self.timeLabel.text = convertDate(milliseconds: weatherResults.dt)
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
