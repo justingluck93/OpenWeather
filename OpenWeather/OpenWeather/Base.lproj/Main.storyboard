@@ -76,7 +76,7 @@
         <!--Current Forcast-->
         <scene sceneID="Vzs-BM-Sc0">
             <objects>
-                <viewController id="l99-fY-JC9" customClass="WeatherViewController" customModule="OpenWeather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WeatherForcast" id="l99-fY-JC9" customClass="WeatherViewController" customModule="OpenWeather" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oTp-fL-g1h">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

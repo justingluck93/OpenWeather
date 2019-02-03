@@ -48,7 +48,7 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func showLocationPermissionAlert() {
-        let alert = UIAlertController(title: "Location Permission Denied", message: "Please turn on location settings in settings", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Location Permission Denied", message: "Please turn on location in settings", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true)
     }
@@ -77,7 +77,6 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
         guard var weatherResults = weatherResults else {
             return
         }
-        
         self.cityLabel.text = "\(weatherResults.name)"
         self.tempLabel.text = "\(Int(weatherResults.main.temp.rounded())) ℉ "
         self.weatherIcon.image = UIImage(data: getImageFromUrl(iconIdentifier: weatherResults.weather[0].icon))

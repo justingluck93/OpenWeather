@@ -14,7 +14,8 @@ import CoreLocation
 class OpenWeatherTests: XCTestCase {
     
     var subject: MockWeatherVC?
-    
+    var fakeJSONDecodable = WeatherResults(main: OpenWeather.Main(temp: 47.170000000000002), name: "Auburn Hills", weather: [OpenWeather.Weather(icon: "50d")], dt: 1549216380.0)
+
     override func setUp() {
         super.setUp()
         subject = MockWeatherVC()
@@ -65,6 +66,23 @@ class OpenWeatherTests: XCTestCase {
         subject?.getWeatherForCurrentLocation(latitude: "50", longitude: "50")
         let expectedURL = URL(string:"https://api.openweathermap.org/data/2.5/weather?lat=50&lon=50&units=imperial&appid=d78bc971defb9c9c6d281dde9d133a02")
         XCTAssertEqual(subject?.weatherURL, expectedURL)
+    }
+    
+    func testThatApplicationUpdatesUIElementsWithCorrectDataFromServie() {
+        let weatherForcast = UIStoryboard(name: "Main", bundle: Bundle(for: WeatherViewController.self)).instantiateViewController(withIdentifier: "WeatherForcast") as! WeatherViewController
+        weatherForcast.loadViewIfNeeded()
+        weatherForcast.weatherResults = fakeJSONDecodable
+        weatherForcast.updateWeather()
+        
+        guard let expectedCity = weatherForcast.cityLabel.text,
+              let expectedTime = weatherForcast.timeLabel.text,
+              let expectedTemperature = weatherForcast.tempLabel.text
+            else { fatalError("Object is Nil") }
+        
+        XCTAssertEqual(expectedCity, "Auburn Hills")
+        XCTAssertEqual(expectedTemperature, "47 ℉ ")
+        XCTAssertEqual(expectedTime, "Sun, Feb 3 12:53 PM")
+        
     }
 }
 

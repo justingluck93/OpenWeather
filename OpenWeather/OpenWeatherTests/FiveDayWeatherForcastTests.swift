@@ -72,6 +72,7 @@ class FiveDayWeatherForcastTests: XCTestCase {
         let expectedURL = URL(string:"https://api.openweathermap.org/data/2.5/forecast?lat=50&lon=50&units=imperial&appid=d78bc971defb9c9c6d281dde9d133a02")
         XCTAssertEqual(subject?.weatherURL, expectedURL)
     }
+    
 }
 
 class MockFiveDayWeatherForcast: FiveDayForcastViewController {

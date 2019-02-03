@@ -35,8 +35,6 @@ class FiveDayForcastViewController: UIViewController, UITableViewDataSource, UIT
             if let data = data {
                 do {
                     self.weatherResults = try JSONDecoder().decode(FiveDayWeatherForcast.self, from: data)
-                    guard let myweatherResults = self.weatherResults else {return}
-                    print(myweatherResults)
                 } catch {
                     return
                 }
@@ -102,7 +100,7 @@ class FiveDayForcastViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func showLocationPermissionAlert() {
-        let alert = UIAlertController(title: "Location Permission Denied", message: "Please turn on location settings in settings", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Location Permission Denied", message: "Please turn on location in settings", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true)
     }
