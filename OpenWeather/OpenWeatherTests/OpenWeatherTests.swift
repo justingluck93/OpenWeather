@@ -35,7 +35,7 @@ class OpenWeatherTests: XCTestCase {
         let manager = MockLocationManager()
         subject?.locationManager = manager
         subject?.locationManager(manager, didChangeAuthorization: .authorizedWhenInUse)
-        assert(manager.didStartUpdatintLocationCalled)
+        assert(manager.didStartUpdatingLocationCalled)
     }
     
     func testThatApplicationCallsShowWeatherPermissionDeniedAlertWhenAuthorizationStatusIsDenied() {
@@ -82,7 +82,6 @@ class OpenWeatherTests: XCTestCase {
         XCTAssertEqual(expectedCity, "Auburn Hills")
         XCTAssertEqual(expectedTemperature, "47 ℉ ")
         XCTAssertEqual(expectedTime, "Sun, Feb 3 12:53 PM")
-        
     }
 }
 
@@ -107,13 +106,13 @@ class MockWeatherVC: WeatherViewController {
 }
 
 class MockLocationManager: CLLocationManager {
-    var didStartUpdatintLocationCalled = false
+    var didStartUpdatingLocationCalled = false
     
     override init() {
         super.init()
     }
     
     override func startUpdatingLocation() {
-        didStartUpdatintLocationCalled = true
+        didStartUpdatingLocationCalled = true
     }
 }
